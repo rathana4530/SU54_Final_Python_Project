@@ -4,15 +4,17 @@ import requests
 @app.route('/shop')
 @app.route('/shop')
 def shop():
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/121.0 Safari/537.36"
+    }
     try:
-        response = requests.get('https://fakestoreapi.com/products', timeout=10)
-        response.raise_for_status()  # Raises HTTPError if response code != 200
-        data = response.json()       # May raise JSONDecodeError
+        response = requests.get('https://fakestoreapi.com/products', headers=headers, timeout=10)
+        response.raise_for_status()
+        data = response.json()
     except requests.exceptions.RequestException as e:
         print("Request error:", e)
-        data = []  # Empty fallback list
-    except ValueError:
-        print("Invalid JSON response from API")
         data = []
 
     return render_template('shop.html', products=data)

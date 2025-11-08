@@ -5,6 +5,11 @@ import requests
 @app.route('/home')
 def home():
     # --- Slider Product ---
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/121.0 Safari/537.36"
+    }
     slider_product = None
     try:
         slider_res = requests.get('https://fakestoreapi.com/products/18', timeout=10)
