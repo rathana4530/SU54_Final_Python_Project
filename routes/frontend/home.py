@@ -4,16 +4,10 @@ import requests
 @app.route('/')
 @app.route('/home')
 def home():
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                      "AppleWebKit/537.36 (KHTML, like Gecko) "
-                      "Chrome/121.0 Safari/537.36"
-    }
-
     # Slider product
     slider_product = None
     try:
-        slider_res = requests.get('https://fakestoreapi.com/products/18', headers=headers, timeout=10)
+        slider_res = requests.get('https://fakestoreapi.com/products/18')
         slider_res.raise_for_status()
         slider_product = slider_res.json()
     except (requests.exceptions.RequestException, ValueError) as e:
@@ -22,9 +16,9 @@ def home():
     # All products
     womens_clothing = []
     try:
-        product_res = requests.get('https://fakestoreapi.com/products', headers=headers, timeout=10)
-        product_res.raise_for_status()
-        products = product_res.json()
+        response = requests.get('https://fakestoreapi.com/products')
+        response.raise_for_status()
+        products = response.json()
         womens_clothing = [p for p in products if p['category'] == "women's clothing"][:3]
     except (requests.exceptions.RequestException, ValueError) as e:
         print("Products fetch error:", e)
